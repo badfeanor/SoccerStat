@@ -22,6 +22,6 @@ print(type(data))
 conn = psycopg2.connect(dbname='soccer_stat', user='soccer', password='SoccerStat2020', host='127.0.0.1',
                         port='5432')
 curConf = conn.cursor()
-curConf.execute("INSERT INTO epl VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);" ,data)
+curConf.execute("INSERT INTO epl VALUES (%s, %i, %i, %i, %i, %s, %i, %i, %s);" ,data)
 curConf.commit()
 curConf.close()
