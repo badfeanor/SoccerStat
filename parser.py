@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import json
+import psycopg2
 
 r = requests.get('https://www.football-stat.ru/football/competition/1026')
 soup = BeautifulSoup(r.text, 'html.parser')
@@ -16,5 +17,11 @@ del data[0]
 for i in data:
     i[-1] = i[-1].replace('\n\n\n', ' ')
 print(data)
-#print(json.dumps(data, ensure_ascii=False, indent=4))
+print(type(data))
 
+conn = psycopg2.connect(dbname='soccer_stat', user='soccer', password='SoccerStat2020', host='127.0.0.1',
+                        port='5432')
+curConf = conn.cursor()
+curConf.execute("INSERT INTO epl VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);" ,data)
+curConf.commit()
+curConf.close()
