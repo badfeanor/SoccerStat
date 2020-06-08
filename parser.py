@@ -1,6 +1,5 @@
 from bs4 import BeautifulSoup
 import requests
-import json
 import psycopg2
 
 r = requests.get('https://www.football-stat.ru/football/competition/1026')
