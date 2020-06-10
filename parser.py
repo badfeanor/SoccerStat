@@ -12,7 +12,7 @@ gbl = {'table_name': 'gbl', 'url': 'https://www.football-stat.ru/football/compet
 
 
 for liga in epl, ell, isa, gbl:
-    print(liga['url'])
+    # print(liga['url'])
     name_of_liga = liga['table_name']
     print(name_of_liga)
     r = requests.get(liga['url'])
@@ -27,7 +27,7 @@ for liga in epl, ell, isa, gbl:
     del data[0]
     for i in data:
         i[-1] = i[-1].replace('\n\n\n', ' ')
-    print(data)
+    # print(data)
 
     curConf = conn.cursor()
     curConf.execute("TRUNCATE table " + name_of_liga + ";")
