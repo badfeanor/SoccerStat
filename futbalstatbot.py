@@ -1,14 +1,14 @@
-import requests
+from telegram.ext import Updater
+from telegram.ext import CommandHandler
 
-url = "https://api.telegram.org/bot1163071581:AAHwVpgFOZdTH5zJ9A2zFs9WIF5qadCtCfY/"
+def sms(bot, update):
+    print('Кто-то написал /start. Что мне делать?')
+    bot.message.reply_text('Привет, {}! Я футбольный бот! \nЯ пока ни хрена не умею! Но скоро научусь! \nЯ очень на это надеюсь, ' .format(bot.message.chat.first_name))
 
+def main():
+    my_bot = Updater("TOKEN", "https://telegg.ru/orig/bot", use_context=True)
+    my_bot.dispatcher.add_handler(CommandHandler('start',sms))
+    my_bot.start_polling()
+    my_bot.idle()
 
-def get_updates_json(request):
-    response = requests.get(request + 'getUpdates')
-    return response.json()
-
-
-def last_update(data):
-    results = data['result']
-    total_updates = len(results) - 1
-    return results[total_updates]
+main()
