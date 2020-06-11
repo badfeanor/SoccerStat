@@ -16,7 +16,7 @@ def getTable(champ):
     table_list = curConf.fetchall()
     conn.close()
     table = BeautifulTable()
-    table.set_style(BeautifulTable.STYLE_DEFAULT)
+    table.set_style(BeautifulTable.STYLE_COMPACT)
     table.column_headers = ["#", "К", "И", "В", "Н", "П", "М", "Р", "О", "Стат"]
     table.column_alignments['К'] = BeautifulTable.ALIGN_LEFT
     for i in table_list:
