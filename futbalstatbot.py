@@ -2,9 +2,23 @@ from telegram import ReplyKeyboardMarkup
 from telegram.ext import Updater
 from telegram.ext import CommandHandler
 import sys
+from beautifultable import BeautifulTable
+
 
 token = sys.argv[1]
+dbpass = sys.argv[2]
 
+def getTable(champ):
+    conn = psycopg2.connect(dbname='soccer_stat', user='soccer', password=dbpass, host='127.0.0.1',
+                            port='5432')
+    curConf = conn.cursor()
+    curConf.execute("SELECT row_number() OVER(), * FROM " + champ + ";")
+    table_list = curConf.fetchall()
+    conn.close()
+    table = BeautifulTable()
+    for i in table_list:
+        table.append_row(i)
+    return table
 
 def sms(bot, update):
     print('Кто-то написал /start. Что мне делать?')
@@ -15,6 +29,7 @@ def eng(bot, update):
     print('Кто-то хочет Англию')
     my_keyboard = ReplyKeyboardMarkup([['/england', '/italy'], ['/spain', '/germany']]) #добавление кнопок
     bot.message.reply_text('ММММ! \n{}, да ты ценитель футбола с туманного Альбиона! Тогда лови. \n\n https://www.soccer.ru/tournament/england/table' .format(bot.message.chat.first_name), reply_markup=my_keyboard)
+    bot.message.reply_text(getTable('epl').format(bot.message.chat), reply_markup=my_keyboard)
 
 def ger(bot, update):
     print('Кто-то хочет Германию')
