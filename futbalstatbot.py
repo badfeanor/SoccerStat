@@ -1,12 +1,12 @@
 from telegram import ReplyKeyboardMarkup
 from telegram.ext import Updater
 from telegram.ext import CommandHandler
-import sys
 from beautifultable import BeautifulTable
 import psycopg2
-
-token = sys.argv[1]
-dbpass = sys.argv[2]
+import os
+os.environ.get('TOKEN')
+token = os.environ.get('TOKEN')
+dbpass = os.environ.get('DBPASS')
 
 def getTable(champ):
     conn = psycopg2.connect(dbname='soccer_stat', user='soccer', password=dbpass, host='127.0.0.1',
