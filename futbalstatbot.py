@@ -3,7 +3,7 @@ from telegram.ext import Updater
 from telegram.ext import CommandHandler
 import sys
 from beautifultable import BeautifulTable
-
+import psycopg2
 
 token = sys.argv[1]
 dbpass = sys.argv[2]
@@ -16,9 +16,11 @@ def getTable(champ):
     table_list = curConf.fetchall()
     conn.close()
     table = BeautifulTable()
+    table.set_style(BeautifulTable.STYLE_COMPACT)
+    table.column_headers = ["К", "И", "В", "Н", "П", "М", "Р", "О", "Стат"]
     for i in table_list:
         table.append_row(i)
-    return table
+    return str(table)
 
 def sms(bot, update):
     print('Кто-то написал /start. Что мне делать?')
@@ -28,8 +30,8 @@ def sms(bot, update):
 def eng(bot, update):
     print('Кто-то хочет Англию')
     my_keyboard = ReplyKeyboardMarkup([['/england', '/italy'], ['/spain', '/germany']]) #добавление кнопок
-    bot.message.reply_text('ММММ! \n{}, да ты ценитель футбола с туманного Альбиона! Тогда лови. \n\n https://www.soccer.ru/tournament/england/table' .format(bot.message.chat.first_name), reply_markup=my_keyboard)
-    bot.message.reply_text(getTable('epl').format(bot.message.chat), reply_markup=my_keyboard)
+#    bot.message.reply_text('ММММ! \n{}, да ты ценитель футбола с туманного Альбиона! Тогда лови. \n\n https://www.soccer.ru/tournament/england/table' .format(bot.message.chat.first_name), reply_markup=my_keyboard)
+    bot.message.reply_text(getTable("epl").format(bot.message.chat), reply_markup=my_keyboard)
 
 def ger(bot, update):
     print('Кто-то хочет Германию')
