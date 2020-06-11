@@ -29,7 +29,7 @@ for liga in epl, ell, isa, gbl:
         data.append([ele for ele in cols if ele])
     del data[0]
     for i in data:
-        i[-1] = i[-1].replace('\n\n\n', ' ')
+        i[-1] = i[-1].replace('\n\n\n', '')
     # print(data)
 
     curConf = conn.cursor()
