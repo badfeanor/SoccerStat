@@ -37,17 +37,20 @@ def eng(bot, update):
 def ger(bot, update):
     print('Кто-то хочет Германию')
     my_keyboard = ReplyKeyboardMarkup([['/england', '/italy'], ['/spain', '/germany']])  # добавление кнопок
-    bot.message.reply_text('ОО! Я-я! \nА ты, {}, любитель брутального арийского фузбала!!! \n\n https://www.soccer.ru/tournament/germany/table' .format(bot.message.chat.first_name), reply_markup=my_keyboard)
+#    bot.message.reply_text('ОО! Я-я! \nА ты, {}, любитель брутального арийского фузбала!!! \n\n https://www.soccer.ru/tournament/germany/table' .format(bot.message.chat.first_name), reply_markup=my_keyboard)
+    bot.message.reply_text(getTable("gdl").format(bot.message.chat), reply_markup=my_keyboard)
 
 def esp(bot, update):
     print('Кто-то хочет Испанию')
     my_keyboard = ReplyKeyboardMarkup([['/england', '/italy'], ['/spain', '/germany']])  # добавление кнопок
-    bot.message.reply_text('Как оказалось, {}, ты у нас ещё один ценитель корриды и загорелых испанских мулаток! Тогда лови! \n\n https://www.soccer.ru/tournament/spain/table' .format(bot.message.chat.first_name), reply_markup=my_keyboard)
+#    bot.message.reply_text('Как оказалось, {}, ты у нас ещё один ценитель корриды и загорелых испанских мулаток! Тогда лови! \n\n https://www.soccer.ru/tournament/spain/table' .format(bot.message.chat.first_name), reply_markup=my_keyboard)
+    bot.message.reply_text(getTable("ell").format(bot.message.chat), reply_markup=my_keyboard)
 
 def ita(bot, update):
     print('Кто-то хочет Италию')
     my_keyboard = ReplyKeyboardMarkup([['/england', '/italy'], ['/spain', '/germany']])  # добавление кнопок
-    bot.message.reply_text('Ох и не ожидал от тебя я такого, {}! \nЛюбуйся на здоровье \n\n https://www.soccer.ru/tournament/italy/table' .format(bot.message.chat.first_name), reply_markup=my_keyboard)
+#    bot.message.reply_text('Ох и не ожидал от тебя я такого, {}! \nЛюбуйся на здоровье \n\n https://www.soccer.ru/tournament/italy/table' .format(bot.message.chat.first_name), reply_markup=my_keyboard)
+    bot.message.reply_text(getTable("isa").format(bot.message.chat), reply_markup=my_keyboard)
 
 def main():
     my_bot = Updater(token, "https://telegg.ru/orig/bot", use_context=True)
