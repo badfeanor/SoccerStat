@@ -1,6 +1,10 @@
 from telegram import ReplyKeyboardMarkup
 from telegram.ext import Updater
 from telegram.ext import CommandHandler
+import sys
+
+token = sys.argv[1]
+
 
 def sms(bot, update):
     print('Кто-то написал /start. Что мне делать?')
@@ -28,7 +32,7 @@ def ita(bot, update):
     bot.message.reply_text('Ох и не ожидал от тебя я такого, {}! \nЛюбуйся на здоровье \n\n https://www.soccer.ru/tournament/italy/table' .format(bot.message.chat.first_name), reply_markup=my_keyboard)
 
 def main():
-    my_bot = Updater("TOKEN", "https://telegg.ru/orig/bot", use_context=True)
+    my_bot = Updater(token, "https://telegg.ru/orig/bot", use_context=True)
     my_bot.dispatcher.add_handler(CommandHandler('start', sms))
     my_bot.dispatcher.add_handler(CommandHandler('england', eng))
     my_bot.dispatcher.add_handler(CommandHandler('germany', ger))

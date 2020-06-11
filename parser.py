@@ -1,8 +1,11 @@
 from bs4 import BeautifulSoup
 import requests
 import psycopg2
+import sys
 
-conn = psycopg2.connect(dbname='soccer_stat', user='soccer', password='SoccerStat2020', host='127.0.0.1',
+dbpass = sys.argv[1]
+
+conn = psycopg2.connect(dbname='soccer_stat', user='soccer', password=dbpass, host='127.0.0.1',
                             port='5432')
 
 epl = {'table_name': 'epl', 'url': 'https://www.football-stat.ru/football/competition/1026'}
