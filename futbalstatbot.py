@@ -12,7 +12,7 @@ def getTable(champ):
     conn = psycopg2.connect(dbname='soccer_stat', user='soccer', password=dbpass, host='127.0.0.1',
                             port='5432')
     curConf = conn.cursor()
-    curConf.execute("SELECT row_number() OVER(), * FROM " + champ + ";")
+    curConf.execute("SELECT * FROM " + champ + ";")
     table_list = curConf.fetchall()
     conn.close()
     table = BeautifulTable()
