@@ -53,7 +53,7 @@ def ita(bot, update):
     bot.message.reply_text(getTable("italy.champ_stat").format(bot.message.chat), reply_markup=my_keyboard)
 
 def main():
-    my_bot = Updater(token, "https://telegg.ru/orig/bot", use_context=True)
+    my_bot = Updater(token, "https://api.telegram.org/bot", use_context=True)
     my_bot.dispatcher.add_handler(CommandHandler('start', sms))
     my_bot.dispatcher.add_handler(CommandHandler('england', eng))
     my_bot.dispatcher.add_handler(CommandHandler('germany', ger))
