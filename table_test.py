@@ -2,8 +2,10 @@
 
 from prettytable import PrettyTable
 import imgkit
+import tempfile
 
 path_wkthmltoimage = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltoimage.exe'
+temp = r'D:\temp'
 config = imgkit.config(wkhtmltoimage=path_wkthmltoimage)
 
 
@@ -45,17 +47,18 @@ def getTable(champ):
                            port='5432')
     curConf = conn.cursor()
     curConf.execute("SELECT * FROM " + champ + ";")
-    table_list = data
+    table_list = curConf.fetchall()
     conn.close()
     table = PrettyTable()
     table.field_names = ["#", "Команда", "И", "В", "Н", "П", "МЗ", "МП", "О"]
     for i in table_list:
         table.add_row(i)
     html = table.get_html_string()
+    tf = tempfile.NamedTemporaryFile()
     css = ['css.css']
     options = {'width': 320, 'disable-smart-width': '', 'encoding': "UTF-8", 'format': 'png'}
-    imgkit.from_string(html, 'out.png', config=config, options=options, css=css)
-    return 'out.png'
+    imgkit.from_string(html, tf, config=config, options=options, css=css,)
+    return tf
 
 
 def ger(bot, update):
@@ -63,3 +66,4 @@ def ger(bot, update):
     my_keyboard = ReplyKeyboardMarkup([['/england', '/italy'], ['/spain', '/germany']])  # добавление кнопок
     getTable("germany.champ_stat")
     bot.send_photo(photo='out.png', reply_markup=my_keyboard)
+    bot.message.reply_text(getTable("england.champ_stat").format(bot.message.chat), reply_markup=my_keyboard)
