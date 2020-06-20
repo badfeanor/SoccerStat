@@ -1,5 +1,4 @@
 # необходимо установить wkhtmltopdf и добавить переменные окружения при необходимости
-import os
 
 from prettytable import PrettyTable
 import imgkit
@@ -42,7 +41,7 @@ data = [['1', 'Ювентус', '26', '20', '3', '3', '50', '24', '63'],
 #    f.write(x.get_html_string())
 
 
-def getTable(champ):
+def getTableImg(champ):
     # conn = psycopg2.connect(dbname='soccer_stat', user='soccer', password=dbpass, host='127.0.0.1',
     #                        port='5432')
     # curConf = conn.cursor()
@@ -62,11 +61,11 @@ def getTable(champ):
     return print(tf.name)
 
 
-getTable(champ=1)
+getTableImg(champ=1)
 
 # def ger(bot, update):
 #     print('Кто-то хочет Германию')
 #     my_keyboard = ReplyKeyboardMarkup([['/england', '/italy'], ['/spain', '/germany']])  # добавление кнопок
-#     getTable("germany.champ_stat")
-#     bot.send_photo(photo='out.png', reply_markup=my_keyboard)
-#     bot.message.reply_text(getTable("england.champ_stat").format(bot.message.chat), reply_markup=my_keyboard)
+#     img = open(getTableImg("england.champ_stat"), 'rb')
+#     bot.send_photo(photo=img), reply_markup=my_keyboard)
+#     bot.message.reply_photo(photo=img).format(bot.message.chat), reply_markup=my_keyboard)
