@@ -35,8 +35,8 @@ for i in data:
 
 html = x.get_html_string()
 
-with open('test.html', 'w') as f:
-    f.write(x.get_html_string())
+#with open('test.html', 'w') as f:
+#    f.write(x.get_html_string())
 
 css = ['css.css']
 options = {'width': 320, 'disable-smart-width': '', 'encoding': "UTF-8", 'format': 'png'}
