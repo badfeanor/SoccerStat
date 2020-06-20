@@ -1,13 +1,12 @@
 # необходимо установить wkhtmltopdf и добавить переменные окружения при необходимости
+import os
 
 from prettytable import PrettyTable
 import imgkit
 import tempfile
 
 path_wkthmltoimage = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltoimage.exe'
-temp = r'\tmp'
 config = imgkit.config(wkhtmltoimage=path_wkthmltoimage)
-
 
 data = [['1', 'Ювентус', '26', '20', '3', '3', '50', '24', '63'],
         ['2', 'Лацио', '26', '19', '5', '2', '60', '23', '62'],
@@ -29,6 +28,7 @@ data = [['1', 'Ювентус', '26', '20', '3', '3', '50', '24', '63'],
         ['18', 'Лечче', '26', '6', '7', '13', '34', '56', '25'],
         ['19', 'СПАЛ', '26', '5', '3', '18', '20', '44', '18'],
         ['20', 'Брешия', '26', '4', '4', '18', '22', '49', '16']]
+
 
 # x = PrettyTable()
 # x.field_names = ["#", "Команда", "И", "В", "Н", "П", "МЗ", "МП", "О"]
@@ -55,16 +55,14 @@ def getTable(champ):
     for i in table_list:
         table.add_row(i)
     html = table.get_html_string()
-    tf = tempfile.NamedTemporaryFile(dir='tmp', mode='w+b')
+    tf = tempfile.NamedTemporaryFile(dir='tmp', mode='w+b', delete=False, suffix='.png')
     css = ['css.css']
     options = {'width': 320, 'disable-smart-width': '', 'encoding': "UTF-8", 'format': 'png'}
-    imgkit.from_string(html, 'tmp.png', config=config, options=options, css=css)
+    imgkit.from_string(html, tf.name, config=config, options=options, css=css)
     return print(tf.name)
 
 
 getTable(champ=1)
-
-
 
 # def ger(bot, update):
 #     print('Кто-то хочет Германию')
