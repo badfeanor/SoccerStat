@@ -2,6 +2,8 @@ from bs4 import BeautifulSoup
 import requests
 import psycopg2
 import sys
+from prettytable import PrettyTable
+import imgkit
 
 dbpass = sys.argv[1]
 
@@ -15,7 +17,6 @@ germany = {'schema_name': 'germany', 'url': 'https://www.sports.ru/football/matc
 
 
 for liga in england, spain, italy, germany:
-    # print(liga['url'])
     name_of_liga = liga['schema_name']
     print(name_of_liga)
     r = requests.get(liga['url'])
@@ -28,7 +29,16 @@ for liga in england, spain, italy, germany:
         cols = [ele.text.strip() for ele in cols]
         data.append([ele for ele in cols if ele])
     del data[0]
-    # print(data)
+
+    table_pretty = PrettyTable()
+    table_pretty.field_names = ["#", "Команда", "И", "В", "Н", "П", "МЗ", "МП", "О"]
+    for i in data:
+        table_pretty.add_row(i)
+    html = table_pretty.get_html_string()
+    # tf = tempfile.NamedTemporaryFile(dir='tmp', mode='w+b', delete=False, suffix='.png')
+    css = ['css.css']
+    options = {'width': 320, 'disable-smart-width': '', 'encoding': "UTF-8", 'format': 'png'}
+    imgkit.from_string(html, '/opt/SoccerStat_metadata/images/' + name_of_liga + '__champ_stat.png', config=config, options=options, css=css)
 
     curConf = conn.cursor()
     curConf.execute("TRUNCATE table " + name_of_liga + ".champ_stat;")
