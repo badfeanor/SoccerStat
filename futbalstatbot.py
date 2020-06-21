@@ -1,4 +1,4 @@
-from telegram import ReplyKeyboardMarkup
+from telegram import ReplyKeyboardMarkup, Message
 from telegram.ext import Updater
 from telegram.ext import CommandHandler
 from beautifultable import BeautifulTable
@@ -52,7 +52,7 @@ def ita(bot, update):
 #    bot.message.reply_text('Ох и не ожидал от тебя я такого, {}! \nЛюбуйся на здоровье \n\n https://www.soccer.ru/tournament/italy/table' .format(bot.message.chat.first_name), reply_markup=my_keyboard)
 #     bot.message.reply_text(getTable("italy.champ_stat").format(bot.message.chat), reply_markup=my_keyboard)
     img = open('/opt/SoccerStat_metadata/italy/champ_stat.png', 'rb')
-    bot.send_photo(photo=img, reply_markup=my_keyboard)
+    bot.message.reply_photo(img.format(bot.message.chat), reply_markup=my_keyboard)
 
 def main():
     my_bot = Updater(token, "https://api.telegram.org/bot", use_context=True)
