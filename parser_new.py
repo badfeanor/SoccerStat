@@ -9,11 +9,14 @@ dbpass = sys.argv[1]
 
 conn = psycopg2.connect(dbname='soccer_stat', user='soccer', password=dbpass, host='127.0.0.1',
                             port='5432')
-list_of_ligas =[]
 ligasFetch = conn.cursor()
 ligasFetch.execute("select distinct schema_name from information_schema.schemata where schema_name != 'public' and schema_name != 'pg_catalog' and schema_name != 'information_schema';")
-list_of_ligas = ligasFetch.fetchall()
+temp_list_of_ligas = ligasFetch.fetchall()
 conn.close()
+list_of_ligas =[]
+for i in temp_list_of_ligas:
+    list_of_ligas.append(i[0])
+
 
 
 england = {'schema_name': 'england', 'url': 'https://www.sports.ru/football/match/england/'}
@@ -36,4 +39,3 @@ for liga in list_of_ligas:
         data.append([ele for ele in cols if ele])
     del data[0]
     print(data)
-conn.close()
