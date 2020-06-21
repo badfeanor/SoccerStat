@@ -29,7 +29,7 @@ for liga in england, spain, italy, germany:
         cols = [ele.text.strip() for ele in cols]
         data.append([ele for ele in cols if ele])
     del data[0]
-
+### TODO Обернуть в функции
     table_pretty = PrettyTable()
     table_pretty.field_names = ["#", "Команда", "И", "В", "Н", "П", "МЗ", "МП", "О"]
     for i in data:
