@@ -26,8 +26,7 @@ germany = {'schema_name': 'germany', 'url': 'https://www.sports.ru/football/matc
 
 
 for liga in list_of_ligas:
-    name_of_liga = liga['schema_name']
-    print(name_of_liga)
+    print(liga)
     r = requests.get(liga['url'])
     soup = BeautifulSoup(r.text, 'html.parser')
     table = soup.body.find('table', attrs={'class': 'stat-table table'})
