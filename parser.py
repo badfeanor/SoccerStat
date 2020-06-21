@@ -38,7 +38,7 @@ for liga in england, spain, italy, germany:
     # tf = tempfile.NamedTemporaryFile(dir='tmp', mode='w+b', delete=False, suffix='.png')
     css = ['css.css']
     options = {'width': 320, 'disable-smart-width': '', 'encoding': "UTF-8", 'format': 'png'}
-    imgkit.from_string(html, '/opt/SoccerStat_metadata/images/' + name_of_liga + '__champ_stat.png', config=config, options=options, css=css)
+    imgkit.from_string(html, '/opt/SoccerStat_metadata/' + name_of_liga + '/champ_stat.png', options=options, css=css)
 
     curConf = conn.cursor()
     curConf.execute("TRUNCATE table " + name_of_liga + ".champ_stat;")
