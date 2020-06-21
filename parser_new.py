@@ -14,7 +14,7 @@ ligasFetch.execute("select * from metadata.parser_info;")
 liga_dates = ligasFetch.fetchall()
 conn.close()
 for i in liga_dates:
-    globals() [i[0]] = i[1]
+    globals()[i[0]] = i[1]
 
 ligas_names = []
 for i in liga_dates:
