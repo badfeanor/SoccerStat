@@ -37,7 +37,7 @@ for liga in england, spain, italy, germany:
     html = table_pretty.get_html_string()
     # tf = tempfile.NamedTemporaryFile(dir='tmp', mode='w+b', delete=False, suffix='.png')
     css = ['css.css']
-    options = {'width': 355, 'disable-smart-width': '', 'encoding': "UTF-8", 'format': 'png'}
+    options = {'width': 357, 'disable-smart-width': '', 'encoding': "UTF-8", 'format': 'png'}
     imgkit.from_string(html, '/opt/SoccerStat_metadata/' + name_of_liga + '/champ_stat.png', options=options, css=css)
 
     curConf = conn.cursor()
