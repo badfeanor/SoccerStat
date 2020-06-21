@@ -12,7 +12,7 @@ conn = psycopg2.connect(dbname='soccer_stat', user='soccer', password=dbpass, ho
 list_of_ligas =[]
 ligasFetch = conn.cursor()
 ligasFetch.execute("select distinct schema_name from information_schema.schemata where schema_name != 'public' and schema_name != 'pg_catalog' and schema_name != 'information_schema';")
-list_of_ligas = curConf.fetchall()
+list_of_ligas = ligasFetch.fetchall()
 conn.close()
 
 
