@@ -10,24 +10,19 @@ dbpass = sys.argv[1]
 conn = psycopg2.connect(dbname='soccer_stat', user='soccer', password=dbpass, host='127.0.0.1',
                             port='5432')
 ligasFetch = conn.cursor()
-ligasFetch.execute("select distinct schema_name from information_schema.schemata where schema_name != 'public' and schema_name != 'pg_catalog' and schema_name != 'information_schema';")
-temp_list_of_ligas = ligasFetch.fetchall()
+ligasFetch.execute("select * from metadata.parser_info;")
+liga_dates = ligasFetch.fetchall()
 conn.close()
-list_of_ligas =[]
-for i in temp_list_of_ligas:
-    list_of_ligas.append(i[0])
+for i in liga_dates:
+    globals()[i[0]] = i[1]
 
+ligas_names = []
+for i in liga_dates:
+    ligas_names.append(i[0])
 
-
-england = {'schema_name': 'england', 'url': 'https://www.sports.ru/football/match/england/'}
-spain = {'schema_name': 'spain', 'url': 'https://www.sports.ru/football/match/spain/'}
-italy = {'schema_name': 'italy', 'url': 'https://www.sports.ru/football/match/italy/'}
-germany = {'schema_name': 'germany', 'url': 'https://www.sports.ru/football/match/germany/'}
-
-
-for liga in list_of_ligas:
+for liga in ligas_names:
     print(liga)
-    r = requests.get(liga['url'])
+    r = requests.get(globals()[liga]['url'])
     soup = BeautifulSoup(r.text, 'html.parser')
     table = soup.body.find('table', attrs={'class': 'stat-table table'})
     rows = table.find_all("tr")
@@ -37,4 +32,19 @@ for liga in list_of_ligas:
         cols = [ele.text.strip() for ele in cols]
         data.append([ele for ele in cols if ele])
     del data[0]
-    print(data)
+
+    table_pretty = PrettyTable()
+    table_pretty.field_names = ["#", "Команда", "И", "В", "Н", "П", "МЗ", "МП", "О"]
+    for i in data:
+        table_pretty.add_row(i)
+    html = table_pretty.get_html_string()
+    # tf = tempfile.NamedTemporaryFile(dir='tmp', mode='w+b', delete=False, suffix='.png')
+    css = ['css.css']
+    options = {'width': 385, 'disable-smart-width': '', 'encoding': "UTF-8", 'format': 'png'}
+    imgkit.from_string(html, '/opt/SoccerStat_metadata/' + liga + '/champ_stat.png', options=options, css=css)
+
+    InsData = conn.cursor()
+    InsData.execute("TRUNCATE table " + liga + ".champ_stat;")
+    InsData.executemany("INSERT INTO " + liga + ".champ_stat VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);", data)
+    conn.commit()
+conn.close()
