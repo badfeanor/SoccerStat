@@ -35,6 +35,7 @@ for row in rows:
             for player in data:
                 curConf = conn.cursor()
                 curConf.execute("TRUNCATE table " + name_of_liga + "." + team + "_players;")
-                curConf.executemany("INSERT INTO " + name_of_liga + "." + team + "_players VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);", player)
+                sql_script = "INSERT INTO " + name_of_liga + "." + team + "_players VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
+                curConf.executemany(sql_script, player)
                 conn.commit()
 conn.close()
