@@ -32,10 +32,9 @@ for row in rows:
                 data.append([ele for ele in cols if ele])
             del data[0]
             del data[-1]
-            for player in data:
-                curConf = conn.cursor()
-                curConf.execute("TRUNCATE table " + name_of_liga + "." + team + "_players;")
-                sql_script = "INSERT INTO " + name_of_liga + "." + team + "_players VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
-                curConf.executemany(sql_script, player)
-                conn.commit()
+            curConf = conn.cursor()
+            curConf.execute("TRUNCATE table " + name_of_liga + "." + team + "_players;")
+            sql_script = "INSERT INTO " + name_of_liga + "." + team + "_players VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
+            curConf.executemany(sql_script, data)
+            conn.commit()
 conn.close()
