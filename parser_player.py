@@ -2,10 +2,11 @@ from bs4 import BeautifulSoup
 import requests
 import psycopg2
 import sys
+
 dbpass = sys.argv[1]
 
 conn = psycopg2.connect(dbname='soccer_stat', user='soccer', password=dbpass, host='127.0.0.1',
-                            port='5432')
+                        port='5432')
 
 england = {'schema_name': 'england', 'url': 'https://www.sports.ru/football/match/england/'}
 
@@ -31,10 +32,11 @@ for row in rows:
                 data.append([ele for ele in cols if ele])
             del data[0]
             del data[-1]
-            print(data)
-            curConf = conn.cursor()
-            curConf.execute("TRUNCATE table " + name_of_liga + "." + team + "_players;")
-            curConf.executemany(
-                "INSERT INTO " + name_of_liga + "." + team + "_players VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);", data)
-            conn.commit()
+            for player in data:
+                curConf = conn.cursor()
+                curConf.execute("TRUNCATE table " + name_of_liga + "." + team + "_players;")
+                curConf.executemany(
+                    "INSERT INTO " + name_of_liga + "." + team + "_players VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
+                    player)
+                conn.commit()
 conn.close()
