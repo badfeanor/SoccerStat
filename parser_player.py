@@ -34,8 +34,9 @@ for row in rows:
             del data[-1]
             for i in data:
                 for idx, item in enumerate(i):
-                    if '-' in item:
+                    if item == '–':
                         i[idx] = '0'
+            print(data)
             curConf = conn.cursor()
             curConf.execute("TRUNCATE table " + name_of_liga + "." + team + "_players;")
             sql_script = "INSERT INTO " + name_of_liga + "." + team + "_players VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
