@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import psycopg2
 import sys
+dbpass = sys.argv[1]
 
 conn = psycopg2.connect(dbname='soccer_stat', user='soccer', password=dbpass, host='127.0.0.1',
                             port='5432')
