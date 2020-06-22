@@ -3,10 +3,10 @@ import requests
 import psycopg2
 import sys
 
-# dbpass = sys.argv[1]
-#
-# conn = psycopg2.connect(dbname='soccer_stat', user='soccer', password=dbpass, host='127.0.0.1',
-#                         port='5432')
+dbpass = sys.argv[1]
+
+conn = psycopg2.connect(dbname='soccer_stat', user='soccer', password=dbpass, host='127.0.0.1',
+                        port='5432')
 
 england = {'schema_name': 'england', 'url': 'https://www.sports.ru/football/match/england/'}
 
@@ -37,9 +37,9 @@ for row in rows:
                     if item == '–':
                         i[idx] = '0'
             print(data)
-#             curConf = conn.cursor()
-#             curConf.execute("TRUNCATE table " + name_of_liga + "." + team + "_players;")
-#             sql_script = "INSERT INTO " + name_of_liga + "." + team + "_players VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
-#             curConf.executemany(sql_script, data)
-#             conn.commit()
-# conn.close()
+            curConf = conn.cursor()
+            curConf.execute("TRUNCATE table " + name_of_liga + "." + team + "_players;")
+            sql_script = "INSERT INTO " + name_of_liga + "." + team + "_players VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
+            curConf.executemany(sql_script, data)
+            conn.commit()
+conn.close()
