@@ -11,7 +11,7 @@ conn = psycopg2.connect(dbname='soccer_stat', user='soccer', password=dbpass, ho
 ligasFetch = conn.cursor()
 ligasFetch.execute("select * from metadata.parser_info;")
 liga_dates = ligasFetch.fetchall()
-conn.close()
+
 for i in liga_dates:
     globals()[i[0]] = i[1]
 
