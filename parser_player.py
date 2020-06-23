@@ -44,14 +44,14 @@ for liga in ligas_names:
                 del data[0]
                 del data[-1]
                 for i in data:
+                    i.insert(2, team)
                     for idx, item in enumerate(i):
                         if item == '–':
                             i[idx] = '0'
                 curConf = conn.cursor()
-                curConf.execute("CREATE TABLE IF NOT EXISTS " + name_of_liga + "." + team + "_players (number smallint, name varchar(30), played smallint, min smallint, bz smallint, vnz smallint, goals smallint, pen smallint, p smallint, gp smallint, yc smallint, rc smallint);")
-                curConf.execute("TRUNCATE table " + name_of_liga + "." + team + "_players;")
-                sql_script = "INSERT INTO " + name_of_liga + "." + team + "_players VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
+                curConf.execute("CREATE TABLE IF NOT EXISTS " + name_of_liga + ".players (number smallint, name varchar(30), team varchar(30), played smallint, min smallint, bz smallint, vnz smallint, goals smallint, pen smallint, p smallint, gp smallint, yc smallint, rc smallint);")
+                curConf.execute("TRUNCATE table " + name_of_liga + ".players;")
+                sql_script = "INSERT INTO " + name_of_liga + ".players VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
                 curConf.executemany(sql_script, data)
                 conn.commit()
 conn.close()
-

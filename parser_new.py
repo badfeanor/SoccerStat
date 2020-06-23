@@ -44,6 +44,7 @@ for liga in ligas_names:
     imgkit.from_string(html, '/opt/SoccerStat_metadata/' + liga + '/champ_stat.png', options=options, css=css)
 
     InsData = conn.cursor()
+    InsData.execute("CREATE TABLE IF NOT EXISTS " + liga + ".champ_stat;");
     InsData.execute("TRUNCATE table " + liga + ".champ_stat;")
     InsData.executemany("INSERT INTO " + liga + ".champ_stat VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);", data)
     conn.commit()
