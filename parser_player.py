@@ -22,6 +22,9 @@ for i in liga_dates:
 for liga in ligas_names:
     name_of_liga = globals()[liga]['schema_name']
     print(name_of_liga)
+    curConf = conn.cursor()
+    curConf.execute("TRUNCATE table " + name_of_liga + ".players;")
+    conn.commit()
     l = requests.get(globals()[liga]['url'])
     soup_l = BeautifulSoup(l.content, 'html.parser')
     table_l = soup_l.body.find('table', attrs={'class': 'stat-table table'})
@@ -50,7 +53,6 @@ for liga in ligas_names:
                             i[idx] = '0'
                 curConf = conn.cursor()
                 curConf.execute("CREATE TABLE IF NOT EXISTS " + name_of_liga + ".players (number smallint, name varchar(30), team varchar(30), played smallint, min smallint, bz smallint, vnz smallint, goals smallint, pen smallint, p smallint, gp smallint, yc smallint, rc smallint);")
-                curConf.execute("TRUNCATE table " + name_of_liga + ".players;")
                 sql_script = "INSERT INTO " + name_of_liga + ".players VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
                 curConf.executemany(sql_script, data)
                 conn.commit()
