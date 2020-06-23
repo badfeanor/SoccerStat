@@ -34,8 +34,8 @@ for liga in ligas_names:
                 print(team)
                 r = requests.get(a['href'] + 'stat/')
                 soup = BeautifulSoup(r.text, 'html.parser')
-                table = soup.body.find('table', attrs={'class': 'stat-table sortable-table js-active'})
-                rows = table.find_all("tr")
+                table2 = soup.body.find('table', attrs={'class': 'stat-table sortable-table js-active'})
+                rows = table2.find_all("tr")
                 data = []
                 for row in rows:
                     cols = row.find_all("td")
