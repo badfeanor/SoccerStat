@@ -24,18 +24,18 @@ for liga in ligas_names:
     print(name_of_liga)
     l = requests.get(globals()[liga]['url'])
     soup_l = BeautifulSoup(l.content, 'html.parser')
-    table = soup_l.body.find('table', attrs={'class': 'stat-table table'})
-    rows = table.find_all("tr")
-    for row in rows:
-        cols = row.find_all("td")
-        for col in cols:
-            for a in col.findAll("a", href=True):
+    table_l = soup_l.body.find('table', attrs={'class': 'stat-table table'})
+    rows_l = table_l.find_all("tr")
+    for row_l in rows_l:
+        cols_l = row_l.find_all("td")
+        for col_l in cols_l:
+            for a in col_l.findAll("a", href=True):
                 team = str(a['href'])[22:-1].replace('-', '_')
                 print(team)
                 r = requests.get(a['href'] + 'stat/')
                 soup = BeautifulSoup(r.text, 'html.parser')
-                table2 = soup.body.find('table', attrs={'class': 'stat-table sortable-table js-active'})
-                rows = table2.find_all("tr")
+                table = soup.body.find('table', attrs={'class': 'stat-table sortable-table js-active'})
+                rows = table.find_all("tr")
                 data = []
                 for row in rows:
                     cols = row.find_all("td")
