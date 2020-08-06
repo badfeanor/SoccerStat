@@ -36,7 +36,6 @@ for liga in ligas_names:
                 data = [str(team), str(team_cyrillic)]
                 print(data)
                 curConf = conn.cursor()
-                #sql_script = "INSERT INTO " + liga + ".teams VALUES (%s, %s);"
                 curConf.execute("INSERT INTO " + liga + ".teams VALUES ('" + str(team) + "', '" + str(team_cyrillic) + "');")
                 conn.commit()
 conn.close()
