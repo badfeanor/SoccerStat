@@ -10,7 +10,6 @@ conn = psycopg2.connect(dbname='soccer_stat', user='soccer', password=dbpass, ho
 ligasFetch = conn.cursor()
 ligasFetch.execute("select * from metadata.parser_info;")
 liga_dates = ligasFetch.fetchall()
-conn.close()
 for i in liga_dates:
     globals()[i[0]] = i[1]
 
@@ -34,10 +33,10 @@ for liga in ligas_names:
             for a in col_l.findAll("a", href=True):
                 team = str(a['href'])[22:-1].replace('-', '_')
                 team_cyrillic = a.text
-                data = [team, team_cyrillic]
-
+                data = [str(team), str(team_cyrillic)]
+                print(data)
                 curConf = conn.cursor()
-                sql_script = "INSERT INTO " + liga + ".teams VALUES (%s, %s);"
-                curConf.executemany(sql_script, data)
+                #sql_script = "INSERT INTO " + liga + ".teams VALUES (%s, %s);"
+                curConf.execute("INSERT INTO " + liga + ".teams VALUES ('" + str(team) + "', '" + str(team_cyrillic) + "');")
                 conn.commit()
 conn.close()
