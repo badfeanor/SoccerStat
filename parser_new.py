@@ -29,13 +29,18 @@ for liga in ligas_names:
     data = []
     for row in rows:
         cols = row.find_all("td")
+        for col in cols:
+            for a in col.findAll("a", href=True):
+                team = str(a['href'])[22:-1].replace('-', '_')
         cols = [ele.text.strip() for ele in cols]
         data.append([ele for ele in cols if ele])
+        data.append(team)
     del data[0]
 
     table_pretty = PrettyTable()
     table_pretty.field_names = ["#", "Команда", "И", "В", "Н", "П", "МЗ", "МП", "О"]
     for i in data:
+        del i[-1]
         table_pretty.add_row(i)
     html = table_pretty.get_html_string()
     # tf = tempfile.NamedTemporaryFile(dir='tmp', mode='w+b', delete=False, suffix='.png')
@@ -46,6 +51,6 @@ for liga in ligas_names:
     InsData = conn.cursor()
     InsData.execute("CREATE TABLE IF NOT EXISTS " + liga + ".champ_stat;");
     InsData.execute("TRUNCATE table " + liga + ".champ_stat;")
-    InsData.executemany("INSERT INTO " + liga + ".champ_stat VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);", data)
+    InsData.executemany("INSERT INTO " + liga + ".champ_stat VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);", data)
     conn.commit()
 conn.close()
