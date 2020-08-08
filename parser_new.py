@@ -55,7 +55,7 @@ for liga in ligas_names:
         table_pretty.add_row(i)
     html = table_pretty.get_html_string()
     # tf = tempfile.NamedTemporaryFile(dir='tmp', mode='w+b', delete=False, suffix='.png')
-    css = ['css.css']
+    css = ['/opt/SoccerStat/css.css']
     options = {'width': 385, 'disable-smart-width': '', 'encoding': "UTF-8", 'format': 'png'}
     imgkit.from_string(html, '/opt/SoccerStat_metadata/' + liga + '/champ_stat.png', options=options, css=css)
 
