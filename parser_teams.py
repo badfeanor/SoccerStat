@@ -21,7 +21,7 @@ for liga in ligas_names:
     print(liga)
     l = requests.get(globals()[liga]['url'])
     curConf = conn.cursor()
-    curConf.execute("TRUNCATE table " + liga + ".teams;")
+    curConf.execute("TRUNCATE table " + liga + ".teams CASCADE;")
     conn.commit()
     soup_l = BeautifulSoup(l.content, 'html.parser')
     table_l = soup_l.body.find('table', attrs={'class': 'stat-table table'})
