@@ -7,6 +7,10 @@ import imgkit
 
 dbpass = sys.argv[1]
 
+headers = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0) Gecko/20100101 Firefox/45.0'
+      }
+
 conn = psycopg2.connect(dbname='soccer_stat', user='soccer', password=dbpass, host='127.0.0.1',
                             port='5432')
 ligasFetch = conn.cursor()
@@ -22,7 +26,7 @@ for i in liga_dates:
 
 for liga in ligas_names:
     print(liga)
-    r = requests.get(globals()[liga]['url'])
+    r = requests.get(globals()[liga]['url'], headers = headers)
     soup = BeautifulSoup(r.text, 'html.parser')
     table = soup.body.find('table', attrs={'class': 'stat-table table'})
     rows = table.find_all("tr")

@@ -5,6 +5,10 @@ import sys
 
 dbpass = sys.argv[1]
 
+headers = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0) Gecko/20100101 Firefox/45.0'
+      }
+
 conn = psycopg2.connect(dbname='soccer_stat', user='soccer', password=dbpass, host='127.0.0.1',
                         port='5432')
 
@@ -25,7 +29,7 @@ for liga in ligas_names:
     curConf = conn.cursor()
     curConf.execute("TRUNCATE table " + name_of_liga + ".players;")
     conn.commit()
-    l = requests.get(globals()[liga]['url'])
+    l = requests.get(globals()[liga]['url'], headers = headers)
     soup_l = BeautifulSoup(l.content, 'html.parser')
     table_l = soup_l.body.find('table', attrs={'class': 'stat-table table'})
     rows_l = table_l.find_all("tr")
